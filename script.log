@@ -1,0 +1,36 @@
+		AUTOMATION SUITE START
+
+	Playwright UI Tests:
+Testing Login for: 'locked_out_user'
+  -> EXPECTED BLOCK: Epic sadface: Sorry, this user has been locked out.
+
+Testing Login for: 'invalid_user'
+  -> EXPECTED BLOCK: Epic sadface: Username and password do not match any user in this service
+
+Testing Login for: ''
+  -> EXPECTED BLOCK: Epic sadface: Username is required
+
+Testing Login for: 'standard_user'
+  -> SUCCESS: Bypassed login and reached dashboard.
+
+
+	Backend API Tests:
+1. Preparing the JSON payload...
+
+2. Firing POST request directly to https://dummyjson.com/auth/login
+3. Server replied with Status Code: 400
+  -> FAILED: Server rejected the payload. Error: {"message":"Invalid credentials"} 
+
+2. Firing POST request directly to https://dummyjson.com/auth/login
+3. Server replied with Status Code: 400
+  -> FAILED: Server rejected the payload. Error: {"message":"Username and password required"} 
+
+2. Firing POST request directly to https://dummyjson.com/auth/login
+3. Server replied with Status Code: 400
+  -> FAILED: Server rejected the payload. Error: {"message":"Invalid credentials"} 
+
+2. Firing POST request directly to https://dummyjson.com/auth/login
+3. Server replied with Status Code: 200
+  -> SUCCESS: Login accepted.
+  -> Server returned Token: eyJhbGciOiJIUzI1NiIs...
+

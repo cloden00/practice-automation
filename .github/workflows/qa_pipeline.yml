@@ -1,0 +1,37 @@
+name: Enterprise QA Suite
+
+# 1. THE TRIGGER
+# Tell the cloud server exactly when to boot up.
+on: 
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# 2. THE ENGINE
+jobs:
+  execute-tests:
+    runs-on: ubuntu-latest # Rent a fresh Ubuntu container
+    
+    # 3. THE EXECUTION STEPS
+    steps:
+      # Step A: Download your code from the repository onto the server
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step B: Install Python
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Step C: Install the exact libraries you used locally
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest playwright requests
+          playwright install --with-deps chromium
+
+      # Step D: Execute the tests and log the output
+      - name: Run Pytest Suite
+        run: pytest -v
